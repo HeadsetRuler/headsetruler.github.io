@@ -1,0 +1,17 @@
+version: 2
+updates:
+# Fetch and update latest `pnpm` packages
+- package-ecosystem: pnpm
+  directory: '/'
+  schedule:
+    interval: daily
+    time: '00:00'
+  open-pull-requests-limit: 10
+  reviewers:
+    - alph4numb3r
+  assignees:
+    - alph4numb3r
+  commit-message:
+    prefix: fix
+    prefix-development: chore
+    include: scope
