@@ -1,5 +1,3 @@
-# HeadsetRuler.com
-
 this sure do be a website
 
 [twitter](https://twitter.com/headsetruler)  
