@@ -8,3 +8,7 @@ this sure do be a website
 
 jami: headsetruler  
 discord: headsetruler#5677
+
+---
+
+[Project Sekai](/sekai)
