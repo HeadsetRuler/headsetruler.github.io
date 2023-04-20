@@ -79,15 +79,12 @@ Other abbreviations:
 
 Event № | Type | Bonus | Exchange | Gacha | Pick-Up
 :------:|:----:|:-----:|:--------:|-------|:------:
-<span id="e54"/>[54](https://sekai.best/event/54) | C | HA <br/> N25miku <br/> VBSlen <br/> LEOluka <br/> WxSkaito <br/> MMJrin <br/> VBSmeiko | CU&nbsp;VBSmeiko3&nbsp;(→[59](#e59)) <br/> CO&nbsp;MMJrin2 | [198 F](https://sekai.best/gacha/198) | CU&nbsp;an <br/> HA&nbsp;toya <br/> ↓
- ↑ | ↑ | ↑ | ↑ | [200 L](https://sekai.best/gacha/200) | HA&nbsp;N25miku <br/> HA&nbsp;VBSlen <br/> HA&nbsp;LEOluka <br/> HA&nbsp;WxSkaito
-<span id="e55"/>[55](https://sekai.best/event/55) || CU&nbsp;WxS | MY&nbsp;emu3 <br/> MY&nbsp;WxSmiku2 | [201](https://sekai.best/gacha/201) | CU&nbsp;tsukasa <br/> CU&nbsp;nene <br/> CU&nbsp;rui
-| Birthday ||| [202](https://sekai.best/gacha/202) | CO&nbsp;minori&nbsp;(⇒[57](#e57))
-<span id="e56"/>[56](https://sekai.best/event/56) || MY&nbsp;LEO | CO&nbsp;shiho3 <br/> CU&nbsp;LEOluka2 | [203](https://sekai.best/gacha/203) | MY&nbsp;ichika <br/> MY&nbsp;saki <br/> MY&nbsp;honami
-| Birthday ||| [204](https://sekai.best/gacha/204) | MY&nbsp;ena
-<span id="e59"/>[57](https://sekai.best/event/57) | C | CO&nbsp;MMJ | CUMMJmiku3 <br/> HA&nbsp;shizuku2 | [205 L](https://sekai.best/gacha/205) | COharuka <br/> minori <br/> MMJrin
-| Birthday ||| [206](https://sekai.best/gacha/206) | CU&nbsp;saki
-<span id="e58"/>[58](https://sekai.best/event/58) || CO <br/> akito <br/> rui <br/> ena <br/> mizuki <br/> WxSluka | PU&nbsp;akito3 <br/> HA&nbsp;ena2&nbsp;(→[63](#e63)) | [207](https://sekaibest/gacha/207) | CO&nbsp;rui <br/> CO&nbsp;mizuki <br/> CO&nbsp;WxSluka
+| Birthday ||| [202](https://sekai.best/gacha/202) | [CO&nbsp;minori](https://sekai.best/card/415)&nbsp;(⇒[57](#e57))
+<span id="e56"/>[56](https://sekai.best/event/56) || MY&nbsp;LEO | [CO&nbsp;shiho3](https://sekai.best/card/419) <br/> [CU&nbsp;LEOluka2](https://sekai.best/card/420) | [203](https://sekai.best/gacha/203) | [MY&nbsp;ichika](https://sekai.best/card/416) <br/> [MY&nbsp;saki](https://sekai.best/card/417) <br/> [MY&nbsp;honami](https://sekai.best/card/418)
+| Birthday ||| [204](https://sekai.best/gacha/204) | [MY&nbsp;ena](https://sekai.best/card/421)
+<span id="e57"/>[57](https://sekai.best/event/57) | C | CO&nbsp;MMJ | [CU&nbsp;MMJmiku3](https://sekai.best/card/425) <br/> [HA&nbsp;shizuku2](https://sekai.best/card/426) | [205 L](https://sekai.best/gacha/205) | [CO&nbsp;haruka](https://sekai.best/card/422) <br/> [CO&nbsp;minori](https://sekai.best/card/423) <br/> [CO&nbsp;MMJrin](https://sekai.best/card/424)
+| Birthday ||| [206](https://sekai.best/gacha/206) | [CU&nbsp;saki](https://sekai.best/card/427)
+<span id="e58"/>[58](https://sekai.best/event/58) || CO <br/> akito <br/> rui <br/> ena <br/> mizuki <br/> WxSluka | <span class="thumbnail">[PU&nbsp;akito3](https://sekai.best/card/431)<img src="https://storage.sekai.best/sekai-assets/character/member/res011_no015_rip/card_after_training.webp" /></span> <br/> [HA&nbsp;ena2](https://sekai.best/card/)&nbsp;(→[63](#e63)) | [207](https://sekaibest/gacha/207) | CO&nbsp;rui <br/> CO&nbsp;mizuki <br/> CO&nbsp;WxSluka
 | Reprint [15](https://sekai.best/event/15) ||| [208](https://sekai.best/gacha/208) | MY&nbsp;emu <br/> MY&nbsp;nene <br/> MY&nbsp;rui
 | Birthday ||| [209](https://sekai.best/gacha/209) | HA&nbsp;tsukasa&nbsp;(⇒[62](#e62))
 <span id="e59"/>[59](https://sekai.best/event/59) || CU&nbsp;VBS (meiko3&nbsp;←[54](#e54)) | MY&nbsp;toya3&nbsp;(→[64](#e64)) <br/> PU&nbsp;an2 | [210](https://sekai.best/gacha210) | CU&nbsp;akito <br/> CU&nbsp;kohane <br/> CU&nbsp;VBSkaito
