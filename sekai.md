@@ -45,6 +45,9 @@ D | 20 | 5 | 60
 
 Events/Gachas: 
 ---
+
+<iframe src="https://calendar.google.com/calendar/embed?src=8719ff0a2f98567649c4859198c9ec75e278b2be534a1116e0c0470c515ac948%40group.calendar.google.com&ctz=Europe%2FAmsterdam" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+
 Characters are listed in the format:
 >(ATTRIBUTE)\[SUBUNIT\](name)(rarity#)
 
