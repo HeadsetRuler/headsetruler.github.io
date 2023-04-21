@@ -78,7 +78,8 @@ Other abbreviations:
 > ↓: also includes the next gacha's Pick-Up cards  
 > ↑: part of previous event
 
-<a id="event-table"/>
+<wbr id="event-table"/>
+
 Event № | Type | Bonus | Exchange | Gacha | Pick-Up
 :------:|:----:|:-----:|:--------:|-------|:------:
 | Birthday ||| [202](https://sekai.best/gacha/202) | [CO&nbsp;minori](https://sekai.best/card/415)&nbsp;(⇒[57](#e57))

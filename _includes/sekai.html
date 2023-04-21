@@ -64,7 +64,7 @@
   })
 </script>
 <style type="text/css">
-  .hoverpreview>div {
+  .wrapper > section .hoverpreview>div {
     pointer-events: none;
     position: fixed;
     visibility: hidden;
@@ -78,24 +78,22 @@
     flex-direction: column;
   }
 
-  .hoverpreview>div>img {
+  .wrapper > section .hoverpreview>div>img {
     /*CSS for preview image*/
     max-height: 50%;
     max-width: 165%;
   }
 
-  .hoverpreview:hover>div>img {
+  .wrapper > section .hoverpreview:hover>div>img {
     /*CSS for preview image on hover*/
     visibility: visible;
   }
 
   .wrapper > section {
-    width: fit-content;
-    max-width: 100%;
     background: #ffffff99;
   }
 
-  thead {
+  .wrapper > section thead {
     position: sticky;
     position: -webkit-sticky;
     top: 0px;
