@@ -1,5 +1,4 @@
 <script>
-
   const
     /** @type {RequestInit} */
     JSONfetchInit = {
@@ -24,6 +23,7 @@
       });
   });
 
+
   class artimg extends HTMLImageElement {
     constructor() {
       super();
@@ -35,7 +35,7 @@
   customElements.define("art-img", artimg, { extends: "img" });
 
   Promise.all([document.ready, cardsPromise]).then(([_, data]) => {
-    document.querySelectorAll("a[href*='/card/' i]").forEach((e) => {
+    document.querySelectorAll("a[href*='/card/' i]").forEach(/** @param {HTMLAnchorElement} e */(e) => {
       e.classList.add("hoverpreview", "card");
       const cardId = e.href.split("/").pop();
       const card = data.find((c) => c.id == cardId);
@@ -52,12 +52,12 @@
     })
   })
   Promise.all([document.ready, gachasPromise]).then(([_, data]) => {
-    document.querySelectorAll("a[href*='/event/' i]").forEach((e) => {
+    document.querySelectorAll("a[href*='/event/' i]").forEach(/** @param {HTMLAnchorElement} e */(e) => {
       e.classList.add("hoverpreview", "event")
     })
   })
   Promise.all([document.ready, eventsPromise]).then(([_, data]) => {
-    document.querySelectorAll("a[href*='/gacha/' i]").forEach((e) => {
+    document.querySelectorAll("a[href*='/gacha/' i]").forEach(/** @param {HTMLAnchorElement} e */(e) => {
       e.id = "e" + e.href.split("/").pop();
       e.classList.add("hoverpreview", "gacha")
     })
@@ -89,7 +89,7 @@
     visibility: visible;
   }
 
-  .wrapper {
+  .wrapper > section {
     width: fit-content;
     max-width: 100%;
     background: #ffffff99;
