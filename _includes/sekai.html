@@ -9,19 +9,18 @@
       mode: "no-cors",
       referrerPolicy: "no-referrer"
     },
-    cardsPromise = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/cards.json", JSONfetchInit).then((response) => response.json()),
-    eventsPromise = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/events.json", JSONfetchInit).then((response) => response.json()),
-    gachasPromise = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", JSONfetchInit).then((response) => response.json()),
+    cardsFetch = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/cards.json", JSONfetchInit).then((response) => response.json()),
+    eventsFetch = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/events.json", JSONfetchInit).then((response) => response.json()),
+    gachasFetch = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", JSONfetchInit).then((response) => response.json()),
     cardArtBase = "https://storage.sekai.best/sekai-assets/character/member/";
 
-  HTMLDocument.prototype.ready = new Promise(function (resolve) {
-    if (document.readyState != "loading")
-      return resolve();
-    else
-      document.addEventListener("DOMContentLoaded", function () {
-        return resolve();
-      });
-  });
+      function DOMReady() {
+        return new Promise((resolve) => {
+          if (document.readyState !== "loading") return resolve();
+          //else
+          return document.addEventListener("DOMContentLoaded", resolve);
+        })
+      };
 
 
   class artimg extends HTMLImageElement {
@@ -34,7 +33,7 @@
   }
   customElements.define("art-img", artimg, { extends: "img" });
 
-  Promise.all([document.ready, cardsPromise]).then(([_, data]) => {
+    const cardsLoaded = Promise.all([DOMReady, cardsFetch]).then(([_, data]) => {
     document.querySelectorAll("a[href*='/card/' i]").forEach(/** @param {HTMLAnchorElement} e */(e) => {
       e.classList.add("hoverpreview", "card");
       const cardId = e.href.split("/").pop();
@@ -50,17 +49,20 @@
         e.appendChild(div);
       }
     })
+    return data;
   })
-  Promise.all([document.ready, gachasPromise]).then(([_, data]) => {
+    const gachasLoaded = Promise.all([DOMReady, gachasFetch]).then(([_, data]) => {
     document.querySelectorAll("a[href*='/event/' i]").forEach(/** @param {HTMLAnchorElement} e */(e) => {
       e.classList.add("hoverpreview", "event")
     })
+    return data;
   })
-  Promise.all([document.ready, eventsPromise]).then(([_, data]) => {
+    const eventsLoaded = Promise.all([DOMReady, eventsFetch]).then(([_, data]) => {
     document.querySelectorAll("a[href*='/gacha/' i]").forEach(/** @param {HTMLAnchorElement} e */(e) => {
       e.id = "e" + e.href.split("/").pop();
       e.classList.add("hoverpreview", "gacha")
     })
+    return data;
   })
 </script>
 <style type="text/css">
