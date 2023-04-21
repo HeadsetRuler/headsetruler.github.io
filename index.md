@@ -1,6 +1,6 @@
 ---
 layout: default
-title: HeadsetRuler.com
+title: Home
 permalink: /
 ---
 

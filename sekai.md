@@ -1,6 +1,6 @@
 ---
 layout: sekai
-title: HeadsetRuler.com > Project Sekai (EN)
+title: Project Sekai (EN)
 ---
 
 Multi-Lobby Titles:
