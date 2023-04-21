@@ -1,3 +1,9 @@
+---
+layout: home
+title: HeadsetRuler.com
+permalink: /
+---
+
 this sure do be a website
 
 [twitter](https://twitter.com/headsetruler)  

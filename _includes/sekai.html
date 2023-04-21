@@ -1,0 +1,104 @@
+<script>
+
+  const
+    /** @type {RequestInit} */
+    JSONfetchInit = {
+      headers: {
+        "Accept": "application/json"
+      },
+      method: "GET",
+      mode: "no-cors",
+      referrerPolicy: "no-referrer"
+    },
+    cardsPromise = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/cards.json", JSONfetchInit).then((response) => response.json()),
+    eventsPromise = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/events.json", JSONfetchInit).then((response) => response.json()),
+    gachasPromise = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", JSONfetchInit).then((response) => response.json()),
+    cardArtBase = "https://storage.sekai.best/sekai-assets/character/member/";
+
+  HTMLDocument.prototype.ready = new Promise(function (resolve) {
+    if (document.readyState != "loading")
+      return resolve();
+    else
+      document.addEventListener("DOMContentLoaded", function () {
+        return resolve();
+      });
+  });
+
+  class artimg extends HTMLImageElement {
+    constructor() {
+      super();
+      this.referrerPolicy = "no-referrer";
+      this.decoding = "async";
+      this.loading = "lazy";
+    }
+  }
+  customElements.define("art-img", artimg, { extends: "img" });
+
+  Promise.all([document.ready, cardsPromise]).then(([_, data]) => {
+    document.querySelectorAll("a[href*='/card/' i]").forEach((e) => {
+      e.classList.add("hoverpreview", "card");
+      const cardId = e.href.split("/").pop();
+      const card = data.find((c) => c.id == cardId);
+      if (card) {
+        const div = document.createElement("div");
+        const normal = document.createElement("img", { is: "art-img" });
+        normal.src = cardArtBase + card.assetbundleName + "_rip/card_normal.webp";
+        const trained = document.createElement("img", { is: "art-img" });
+        trained.src = cardArtBase + card.assetbundleName + "_rip/card_after_training.webp";
+        div.appendChild(normal);
+        div.appendChild(trained);
+        e.appendChild(div);
+      }
+    })
+  })
+  Promise.all([document.ready, gachasPromise]).then(([_, data]) => {
+    document.querySelectorAll("a[href*='/event/' i]").forEach((e) => {
+      e.classList.add("hoverpreview", "event")
+    })
+  })
+  Promise.all([document.ready, eventsPromise]).then(([_, data]) => {
+    document.querySelectorAll("a[href*='/gacha/' i]").forEach((e) => {
+      e.id = "e" + e.href.split("/").pop();
+      e.classList.add("hoverpreview", "gacha")
+    })
+  })
+</script>
+<style type="text/css">
+  .hoverpreview>div {
+    pointer-events: none;
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .hoverpreview>div>img {
+    /*CSS for preview image*/
+    max-height: 50%;
+    max-width: 165%;
+  }
+
+  .hoverpreview:hover>div>img {
+    /*CSS for preview image on hover*/
+    visibility: visible;
+  }
+
+  .wrapper {
+    width: fit-content;
+    max-width: 100%;
+    background: #ffffff99;
+  }
+
+  thead {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    background: #bbbbbb99;
+  }
+</style>
