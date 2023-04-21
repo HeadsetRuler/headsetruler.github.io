@@ -1,18 +1,17 @@
 <script>
-  const
     /** @type {RequestInit} */
-    JSONfetchInit = {
+    const JSONfetchInit = {
       headers: {
         "Accept": "application/json"
       },
       method: "GET",
       mode: "no-cors",
       referrerPolicy: "no-referrer"
-    },
-    cardsFetch = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/cards.json", JSONfetchInit).then((response) => response.json()),
-    eventsFetch = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/events.json", JSONfetchInit).then((response) => response.json()),
-    gachasFetch = fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", JSONfetchInit).then((response) => response.json()),
-    cardArtBase = "https://storage.sekai.best/sekai-assets/character/member/";
+          };
+          const cardsFetch = (fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/cards.json", JSONfetchInit).then((response) => response.json()));
+          const eventsFetch = (fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/events.json", JSONfetchInit).then((response) => response.json()));
+          const gachasFetch = (fetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", JSONfetchInit).then((response) => response.json()));
+          const cardArtBase = "https://storage.sekai.best/sekai-assets/character/member/";
 
       function DOMReady() {
         return new Promise((resolve) => {
