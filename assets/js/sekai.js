@@ -47,7 +47,7 @@ const JSONfetchInit = {
     method: "GET",
     referrerPolicy: "no-referrer"
 };
-function sekaiDbJsonFetch(input, callback = (([data, ...args]) => { return data; }), deps) {
+function sekaiDbJsonFetch(input, callback = (([data, ...args]) => { return data; }), deps = []) {
     const loaded = fetch(input, {
         headers: {
             "Accept": "application/json"
@@ -58,7 +58,7 @@ function sekaiDbJsonFetch(input, callback = (([data, ...args]) => { return data;
         console.error(`${input} failed to load!`, "\n", reason);
         return Promise.reject(reason);
     });
-    return Promise.all([loaded, ...deps]).then(callback);
+    return Promise.all([loaded, ...[...deps]]).then(callback);
 }
 const tableRows = new Set;
 function generateCardLink(card, gameCharacters, appendRarity = card.cardRarityType === "rarity_4" || card.cardRarityType === "rarity_birthday" ? false : true) {

@@ -53,8 +53,8 @@ const JSONfetchInit: RequestInit = {
 
 
 
-function sekaiDbJsonFetch<T, const D extends readonly Promise<unknown>[] = readonly never[]>(input: RequestInfo | URL, callback?: (data: [T, ...{ -readonly [P in keyof D]: Awaited<D[P]> }]) => T, deps?: D): Promise<T>
-function sekaiDbJsonFetch<T, const D extends readonly Promise<unknown>[] = readonly never[]>(input: RequestInfo | URL, callback: (data: [T, ...{ -readonly [P in keyof D]: Awaited<D[P]> }]) => T = (([data, ...args]) => { return data }), deps: D): Promise<T> {
+function sekaiDbJsonFetch<T, const D extends readonly Promise<unknown>[] = readonly []>(input: RequestInfo | URL, callback?: (data: [T, ...{ -readonly [P in keyof D]: Awaited<D[P]> }]) => T, deps?: D): Promise<T>
+function sekaiDbJsonFetch<T, const D extends readonly Promise<unknown>[] = readonly []>(input: RequestInfo | URL, callback: (data: [T, ...{ -readonly [P in keyof D]: Awaited<D[P]> }]) => T = (([data, ...args]) => { return data }), deps: D = [] as unknown as D): Promise<T> {
   const loaded = fetch(input, {
     headers: {
       "Accept": "application/json"
@@ -64,8 +64,8 @@ function sekaiDbJsonFetch<T, const D extends readonly Promise<unknown>[] = reado
   }).then(
     (response) => { return response.json() as Promise<T> }, (reason) => {
       console.error(`${input} failed to load!`, "\n", reason); return Promise.reject(reason)
-    })
-  return Promise.all([loaded, ...deps as D] as const).then(callback)
+  })
+  return Promise.all([loaded, ...[...deps]] as const).then(callback)
 }
 
 
