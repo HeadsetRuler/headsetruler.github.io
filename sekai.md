@@ -78,8 +78,10 @@ Other abbreviations:
 > ↓: also includes the next gacha's Pick-Up cards  
 > ↑: part of previous event
 
-<wbr id="event-table"/>
 
+<div id="event-table>  
+
+*Looks like you have JavaScript disabled! Here's a cached table, it might be out of date.*
 Event № | Type | Bonus | Exchange | Gacha | Pick-Up
 :------:|:----:|:-----:|:--------:|-------|:------:
 | Birthday ||| [202](https://sekai.best/gacha/202) | [CO&nbsp;minori](https://sekai.best/card/415)&nbsp;(⇒[57](#e57))
@@ -175,3 +177,5 @@ Event № | Type | Bonus | Exchange | Gacha | Pick-Up
 | Free Ticket: 2.5th Anniversary ||| [312](https://sekai.best/gacha/312)
 [90](https://sekai.best/event/90) | C | HA&nbsp;shiho <br/> HA&nbsp;an <br/> HA&nbsp;nene <br/> HA&nbsp;ena <br/> HA&nbsp;LEOmiku | [PU&nbsp;nene3](https://sekai.best/card/623) | [310 F](https://sekai.best/gacha/310) | [CO&nbsp;PIArin](https://sekai.best/card/617) <br/> [CU&nbsp;PIAlen](https://sekai.best/card/618) <br/> ↓
  ↑ | ↑ | ↑ | ↑ | [316 L](https://sekai.best/gacha/316) | [HA&nbsp;shiho](https://sekai.best/card/619) <br/> [HA&nbsp;an](https://sekai.best/card/620) <br/> [HA&nbsp;ena](https://sekai.best/card/621) <br/> [HA&nbsp;LEOmiku](https://sekai.best/card/622)
+
+</div>

@@ -1,0 +1,18 @@
+{
+  "typeAcquisition": {
+    "enable": true
+  },
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "ES2020",
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "../assets/js",
+    "strict": true,
+    "sourceMap": true,
+    "isolatedModules": true,
+    "watch": true,
+    "rootDir": "."
+  },
+  "compileOnSave": true
+}

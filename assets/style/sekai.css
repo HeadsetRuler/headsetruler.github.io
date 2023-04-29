@@ -1,0 +1,44 @@
+.wrapper>section {
+  background: #ffffff99;
+}
+
+.hoverpreview>div {
+  pointer-events: none;
+  position: fixed;
+  visibility: hidden;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.hoverpreview>div>img {
+  /*CSS for preview image*/
+  max-height: 50%;
+  max-width: 165%;
+}
+
+.hoverpreview:hover>div>img {
+  /*CSS for preview image on hover*/
+  visibility: visible;
+}
+
+#event-table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+#event-table thead {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0px;
+  background: #bbbbbb99;
+}
+
+#event-table td {
+  background: unset;
+}
