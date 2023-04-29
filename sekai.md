@@ -79,4 +79,4 @@ Other abbreviations:
 > ↑: part of previous event
 
 
-<div id="event-table></div>
+<div id="event-table"></div>
