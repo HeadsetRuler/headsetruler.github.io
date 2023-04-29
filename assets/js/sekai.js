@@ -100,7 +100,7 @@ const fetches = (() => {
     const events_en = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-en-diff/main/events.json");
     const events = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/events.json", ([events, eventCards, eventDeckBonuses, cards, events_en, gameCharacterUnits, gameCharacters]) => {
         const eventoffset = ((event) => event ? event.startAt - events[event.id].startAt : 31556926000 /* unix year in ms */)([...events_en].reverse().find(event_en => [...events].reverse().some(event => event.id === event_en.id)));
-        const now = globalNow + eventoffset;
+        const now = globalNow - eventoffset;
         events.filter(event => event.closedAt > now).forEach(event => {
             const eventRow = Object.assign(document.createElement("tr"), { sekaiEvent: event });
             eventRow.id = "e" + event.id;
@@ -167,7 +167,7 @@ const fetches = (() => {
     }, [eventCards, eventDeckBonuses, cards, events_en, gameCharacterUnits, gameCharacters]);
     const gachas = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", ([gachas, events, events_en, cards, gameCharacters, gameCharacterUnits]) => {
         const eventoffset = ((event) => event ? event.startAt - events[event.id].startAt : 31556926000 /* unix year in ms */)([...events_en].reverse().find(event_en => [...events].reverse().some(event => event.id === event_en.id)));
-        const now = globalNow + eventoffset;
+        const now = globalNow - eventoffset;
         const eventRows = [...tableRows].filter((tableRow) => {
             return Object.getOwnPropertyNames(tableRow).includes("pickupCards");
         });
