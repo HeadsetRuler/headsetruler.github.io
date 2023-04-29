@@ -180,7 +180,7 @@ const fetches = (() => {
             eventBonusCellContent.add(gameCharacters[gameCharacterUnits[eventDeckBonus.gameCharacterUnitId - 1].gameCharacterId - 1].givenName.toLowerCase())
           })
       }
-      eventBonusCell.textContent = [...eventBonusCellContent].join("\n")
+      eventBonusCell.textContent = [...eventBonusCellContent].join("<br/>")
       eventBonusCell.style.textAlign = "center"
 
       const pickupCards = new Set<ICardInfo>()
@@ -245,7 +245,7 @@ const fetches = (() => {
         } = Object.assign(((gacha.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Normal && gacha.gachaType === "ceil") ? eventRows.find(eventRow => {
           if (eventRow.sekaiEvent.startAt > gacha.endAt || eventRow.sekaiEvent.closedAt < gacha.startAt) return false
           const eventPickupCards = eventRow.pickupCards
-          gacha.gachaPickups.every(gachaPickup =>
+          return gacha.gachaPickups.every(gachaPickup =>
             [...eventPickupCards].some(pickupCard =>
               pickupCard.id === gachaPickup.cardId
             )

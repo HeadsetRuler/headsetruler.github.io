@@ -158,7 +158,7 @@ const fetches = (() => {
                     eventBonusCellContent.add(gameCharacters[gameCharacterUnits[eventDeckBonus.gameCharacterUnitId - 1].gameCharacterId - 1].givenName.toLowerCase());
                 });
             }
-            eventBonusCell.textContent = [...eventBonusCellContent].join("\n");
+            eventBonusCell.textContent = [...eventBonusCellContent].join("<br/>");
             eventBonusCell.style.textAlign = "center";
             const pickupCards = new Set();
             const exchangeCards = new Set();
@@ -210,7 +210,7 @@ const fetches = (() => {
                 if (eventRow.sekaiEvent.startAt > gacha.endAt || eventRow.sekaiEvent.closedAt < gacha.startAt)
                     return false;
                 const eventPickupCards = eventRow.pickupCards;
-                gacha.gachaPickups.every(gachaPickup => [...eventPickupCards].some(pickupCard => pickupCard.id === gachaPickup.cardId));
+                return gacha.gachaPickups.every(gachaPickup => [...eventPickupCards].some(pickupCard => pickupCard.id === gachaPickup.cardId));
             }) : undefined) || document.createElement("tr"), {
                 sekaiGacha: gacha,
                 pickupCards: new Set(gacha.gachaPickups.map(gachaPickup => cards.find(card => card.id === gachaPickup.cardId)))
