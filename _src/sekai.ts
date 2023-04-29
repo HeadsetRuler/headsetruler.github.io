@@ -125,9 +125,9 @@ const fetches = (() => {
         Object.assign(document.createElement("a"),
           {
             href: `https://sekai.best/event/${event.id}`,
-            textContent: event.id.toString(),
-            classList: new DOMTokenList().add("hoverpreview", "event")
+            textContent: event.id.toString()
           } as Partial<HTMLAnchorElement>))
+      eventIdCell.firstElementChild!.classList.add("hoverpreview", "event")
       eventIdCell.style.textAlign = "center"
 
       // cell 2: event type
@@ -266,9 +266,9 @@ const fetches = (() => {
         Object.assign(document.createElement("a"),
           {
             href: `https://sekai.best/gacha/${gacha.id}`,
-            textContent: gacha.id.toString() + (festaParent ? "'\xa0'F" : gachaRow.sekaiEvent?.eventType === "cheerful_carnival" ? "'\xa0'L" : ""),
-            classList: new DOMTokenList().add("hoverpreview", "gacha")
+            textContent: gacha.id.toString() + (festaParent ? "'\xa0'F" : gachaRow.sekaiEvent?.eventType === "cheerful_carnival" ? "'\xa0'L" : "")
           } as Partial<HTMLAnchorElement>))
+      gachaCell.firstElementChild!.classList.add("hoverpreview", "gacha")
 
       // cell 6: Pick-Up
       const pickupCell = gachaRow.insertCell()
