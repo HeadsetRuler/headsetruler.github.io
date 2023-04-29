@@ -37,24 +37,8 @@ declare type NumberBetween<N1 extends IsValid<N1>, N2 extends IsValid<N2>> = Exc
 >
 
 declare type unit = "light_sound" | "idol" | "street" | "theme_park" | "school_refusal" | "piapro"
-declare enum unitAbbreviation {
-  light_sound = "LEO",
-  idol = "MMJ",
-  street = "VBS",
-  theme_park = "WxS",
-  school_refusal = "N25",
-  piapro = "PIA"
-}
 declare type subunit = "none" | Exclude<unit, "piapro">
 declare type attr = "cute" | "cool" | "pure" | "happy" | "mysterious"
-
-declare enum attrAbbreviation {
-  cute = "CU",
-  cool = "CO",
-  pure = "PU",
-  happy = "HA",
-  mysterious = "MY"
-}
 
 declare type gameCharacterId = NumberBetween<1, 27>
 
@@ -102,12 +86,7 @@ declare interface GachaCardRarityRate {
   rate: number
 }
 
-declare enum gachaCardRarityRateGroupId {
-  Normal = 1,
-  ThreeStarPlus = 2,
-  Festa = 3,
-  Birthday = 4
-}
+
 
 declare interface IGachaInfo {
   id: number

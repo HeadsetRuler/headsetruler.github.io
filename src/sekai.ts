@@ -4,6 +4,27 @@ const DOMReady = new Promise<void>((resolve: ((..._: any) => void)) => {
   return document.addEventListener("DOMContentLoaded", resolve)
 })
 
+enum unitAbbreviation {
+  light_sound = "LEO",
+  idol = "MMJ",
+  street = "VBS",
+  theme_park = "WxS",
+  school_refusal = "N25",
+  piapro = "PIA"
+}
+enum attrAbbreviation {
+  cute = "CU",
+  cool = "CO",
+  pure = "PU",
+  happy = "HA",
+  mysterious = "MY"
+}
+enum gachaCardRarityRateGroupId {
+  Normal = 1,
+  ThreeStarPlus = 2,
+  Festa = 3,
+  Birthday = 4
+}
 type PropsOfType<T, U> = keyof { [K in keyof T as T[K] extends U ? K : never]: T[K] }
 type PropsOfTypeNotAny<T, U> = Exclude<PropsOfType<T, U>, PropsOfType<T, null>>
 

@@ -5,6 +5,30 @@ const DOMReady = new Promise((resolve) => {
     //else
     return document.addEventListener("DOMContentLoaded", resolve);
 });
+var unitAbbreviation;
+(function (unitAbbreviation) {
+    unitAbbreviation["light_sound"] = "LEO";
+    unitAbbreviation["idol"] = "MMJ";
+    unitAbbreviation["street"] = "VBS";
+    unitAbbreviation["theme_park"] = "WxS";
+    unitAbbreviation["school_refusal"] = "N25";
+    unitAbbreviation["piapro"] = "PIA";
+})(unitAbbreviation || (unitAbbreviation = {}));
+var attrAbbreviation;
+(function (attrAbbreviation) {
+    attrAbbreviation["cute"] = "CU";
+    attrAbbreviation["cool"] = "CO";
+    attrAbbreviation["pure"] = "PU";
+    attrAbbreviation["happy"] = "HA";
+    attrAbbreviation["mysterious"] = "MY";
+})(attrAbbreviation || (attrAbbreviation = {}));
+var gachaCardRarityRateGroupId;
+(function (gachaCardRarityRateGroupId) {
+    gachaCardRarityRateGroupId[gachaCardRarityRateGroupId["Normal"] = 1] = "Normal";
+    gachaCardRarityRateGroupId[gachaCardRarityRateGroupId["ThreeStarPlus"] = 2] = "ThreeStarPlus";
+    gachaCardRarityRateGroupId[gachaCardRarityRateGroupId["Festa"] = 3] = "Festa";
+    gachaCardRarityRateGroupId[gachaCardRarityRateGroupId["Birthday"] = 4] = "Birthday";
+})(gachaCardRarityRateGroupId || (gachaCardRarityRateGroupId = {}));
 class crossOriginImage extends HTMLImageElement {
     constructor() {
         super();
