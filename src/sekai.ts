@@ -177,7 +177,8 @@ const fetches = (() => {
           /*side-effect*/(() => { eventAttr = eventDeckBonus.cardAttr; eventBonusCellContent.add(attrAbbreviation[eventAttr] + '\n'); return true })() &&
           eventDeckBonus.gameCharacterUnitId !== undefined)
           .forEach(eventDeckBonus => {
-            eventBonusCellContent.add(gameCharacters[gameCharacterUnits[eventDeckBonus.gameCharacterUnitId - 1].gameCharacterId - 1].givenName.toLowerCase())
+            const gameCharacterUnit = gameCharacterUnits[eventDeckBonus.gameCharacterUnitId - 1]
+            eventBonusCellContent.add((eventDeckBonus.gameCharacterUnitId > 20 ? unitAbbreviation[gameCharacterUnit.unit] : "") + gameCharacters[gameCharacterUnit.gameCharacterId - 1].givenName.toLowerCase())
           })
       }
       eventBonusCell.innerText = [...eventBonusCellContent].join(' ')
