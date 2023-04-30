@@ -1,5 +1,5 @@
 .wrapper>section {
-  background: #ffffff99;
+  background: #ffffff99
 }
 
 .hoverpreview>div {
@@ -13,32 +13,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: column
 }
 
 .hoverpreview>div>img {
-  /*CSS for preview image*/
   max-height: 50%;
   max-width: 165%;
+  margin: 0;
+    position: unset;
+    padding: 0;
+    border: none;
 }
 
 .hoverpreview:hover>div>img {
-  /*CSS for preview image on hover*/
-  visibility: visible;
+  visibility: visible
 }
 
-#event-table {
-  border: 1px solid black;
+#event-table table {
   border-collapse: collapse;
+  border: 1px solid #000c;
+    vertical-align: middle;
 }
 
 #event-table thead {
   position: sticky;
   position: -webkit-sticky;
-  top: 0px;
-  background: #bbbbbb99;
+  top: 0;
+    background: #bbbbbb99
 }
 
 #event-table td {
   background: unset;
+  border: 1px solid #000c;
+    vertical-align: middle;
+  }
+  
+  #event-table th {
+    background: #0009;
+    vertical-align: bottom;
+    border: 1px solid #000c;
 }

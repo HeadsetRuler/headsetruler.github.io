@@ -96,7 +96,7 @@ function generateCardLink(card: ICardInfo, gameCharacters: IGameChara[], appendR
   const gameCharacter = gameCharacters[card.characterId - 1]
   const cardLink = document.createElement("a")
   cardLink.href = `https://sekai.best/card/${card.id}`
-  cardLink.textContent = attrAbbreviation[card.attr] +
+  cardLink.innerText = attrAbbreviation[card.attr] +
     '\xa0'/*&nbsp;*/ +
     (card.supportUnit === "none" ? "" : unitAbbreviation[card.supportUnit]) +
     gameCharacter.givenName.toLowerCase() +
@@ -104,19 +104,19 @@ function generateCardLink(card: ICardInfo, gameCharacters: IGameChara[], appendR
   cardLink.classList.add("hoverpreview", "card")
   const cardArtBase = "https://storage.sekai.best/sekai-assets/character/member/"
   const div = document.createElement("div")
-  const normal = document.createElement("img", { is: "co-img" })
-  normal.src = cardArtBase + card.assetbundleName + "_rip/card_normal.webp"
-  const normalAppended = normal.decode().then(() => {
+  cardLink.addEventListener("pointerover", () => {
+    const normal = document.createElement("img", { is: "co-img" })
+    normal.src = cardArtBase + card.assetbundleName + "_rip/card_normal.webp"
     div.appendChild(normal)
-  }, () => normal.remove())
-  const trained = document.createElement("img", { is: "co-img" })
-  trained.src = cardArtBase + card.assetbundleName + "_rip/card_after_training.webp"
-  const trainedAppended = trained.decode().then(() => {
-    div.appendChild(trained)
-  }, () => trained.remove())
-  Promise.allSettled([normalAppended, trainedAppended]).then(() => {
+    if (card.specialTrainingCosts.length !== 0) {
+      const trained = document.createElement("img", { is: "co-img" })
+      trained.src = cardArtBase + card.assetbundleName + "_rip/card_after_training.webp"
+      div.appendChild(trained)
+    }
     cardLink.appendChild(div)
-  })
+  }, { once: true })
+
+
   return cardLink
 }
 
@@ -146,14 +146,14 @@ const fetches = (() => {
         Object.assign(document.createElement("a"),
           {
             href: `https://sekai.best/event/${event.id}`,
-            textContent: event.id.toString()
+            innerText: event.id.toString()
           } as Partial<HTMLAnchorElement>))
       eventIdCell.firstElementChild!.classList.add("hoverpreview", "event")
       eventIdCell.style.textAlign = "center"
 
       // cell 2: event type
       const eventTypeCell = eventRow.insertCell()
-      eventTypeCell.textContent = event.eventType === "cheerful_carnival" ? "C" : ""
+      eventTypeCell.innerText = event.eventType === "cheerful_carnival" ? "C" : ""
       eventTypeCell.style.textAlign = "center"
 
       // cell 3: event bonus characters/unit
@@ -174,13 +174,13 @@ const fetches = (() => {
         } =>
           eventDeckBonus.eventId === event.id &&
           eventDeckBonus.cardAttr !== undefined &&
-          /*side-effect*/(() => { eventAttr = eventDeckBonus.cardAttr; eventBonusCellContent.add(attrAbbreviation[eventAttr]); return true })() &&
+          /*side-effect*/(() => { eventAttr = eventDeckBonus.cardAttr; eventBonusCellContent.add(attrAbbreviation[eventAttr] + '\n'); return true })() &&
           eventDeckBonus.gameCharacterUnitId !== undefined)
           .forEach(eventDeckBonus => {
             eventBonusCellContent.add(gameCharacters[gameCharacterUnits[eventDeckBonus.gameCharacterUnitId - 1].gameCharacterId - 1].givenName.toLowerCase())
           })
       }
-      eventBonusCell.textContent = [...eventBonusCellContent].join("<br/>")
+      eventBonusCell.innerText = [...eventBonusCellContent].join(' ')
       eventBonusCell.style.textAlign = "center"
 
       const pickupCards = new Set<ICardInfo>()
@@ -216,7 +216,7 @@ const fetches = (() => {
     })
     return events
   }, [eventCards, eventDeckBonuses, cards, events_en, gameCharacterUnits, gameCharacters])
-  const gachas: Promise<IGachaInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", ([gachas, events, events_en, cards, gameCharacters, gameCharacterUnits]) => {
+  const gachas: Promise<IGachaInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", ([gachas, events, events_en, cards, gameCharacters]) => {
     const eventoffset = ((event) => event ? event.startAt - events[event.id].startAt : 31556926000 /* unix year in ms */)([...events_en].reverse().find(event_en => [...events].reverse().some(event => event.id === event_en.id)))
     const now = globalNow - eventoffset
     const eventRows = [...tableRows].filter((tableRow): tableRow is HTMLTableRowElement & { sekaiEvent: IEventInfo, pickupCards: Set<ICardInfo> } => {
@@ -230,11 +230,9 @@ const fetches = (() => {
       const isBirthday = gacha.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Birthday
 
       //flag festas
-      const festaParent = gacha.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Festa ? gachas.find(festaParent => {
+      const festaParent = gacha.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Festa ? gachas.find(festaParent =>
         festaParent.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Normal &&
-          festaParent.gachaCeilItemId === gacha.gachaCeilItemId
-
-      }) : undefined
+        festaParent.gachaCeilItemId === gacha.gachaCeilItemId) : undefined
 
       const gachaRow:
         HTMLTableRowElement &
@@ -260,25 +258,19 @@ const fetches = (() => {
         //cell 1-4: FESTA
         const typeCell = gachaRow.insertCell()
         typeCell.colSpan = 4
-        typeCell.textContent = "FESTA"
+        typeCell.innerText = "FESTA"
         typeCell.style.textAlign = "center"
         typeCell.style.fontWeight = "bold"
         typeCell.style.fontSize = "1.2em"
       }
       else if (!gachaRow.sekaiEvent) {
 
-
-        //cell 1: blank
-        gachaRow.insertCell()
-
-        //cell 2: Type
+        //cell 1-4: Type
         const typeCell = gachaRow.insertCell()
-        typeCell.textContent = isBirthday ? "Birthday" : ""
-        typeCell.textContent += gacha.name.includes("復刻") ? (isBirthday ? " " : "" + "Reprint") : ""
+        typeCell.colSpan = 4
+        typeCell.innerText = isBirthday ? "Birthday" : ""
+        typeCell.innerText += gacha.name.includes("復刻") ? (isBirthday ? " " : "" + "Reprint") : ""
         typeCell.style.textAlign = "center"
-
-        // cell 3 - 4: blank
-        gachaRow.insertCell().colSpan = 2
       }
 
       // cell 5: gacha
@@ -287,7 +279,7 @@ const fetches = (() => {
         Object.assign(document.createElement("a"),
           {
             href: `https://sekai.best/gacha/${gacha.id}`,
-            textContent: gacha.id.toString() + (festaParent ? "'\xa0'F" : gachaRow.sekaiEvent?.eventType === "cheerful_carnival" ? "'\xa0'L" : "")
+            innerText: gacha.id.toString() + (festaParent ? "\xa0F" : gachaRow.sekaiEvent?.eventType === "cheerful_carnival" ? "\xa0L" : "")
           } as Partial<HTMLAnchorElement>))
       gachaCell.firstElementChild!.classList.add("hoverpreview", "gacha")
 
@@ -309,7 +301,7 @@ const fetches = (() => {
     }) as HTMLTableRowElement[])
 
     return gachas
-  }, [events, events_en, cards, gameCharacters, gameCharacterUnits])
+  }, [events, events_en, cards, gameCharacters])
 
   return [
     events,
@@ -333,7 +325,7 @@ Promise.all([DOMReady, fetches["1"]]).then(([_, data]) => {
     const row = new Array<Node>()
     for (const header of ["Event\xa0№", "Type", "Bonus", "Exchange", "Gacha", "Pick-Up"] as const) {
       const th = document.createElement("th")
-      th.textContent = header
+      th.innerText = header
       th.scope = "col"
       if (header !== "Gacha") th.style.textAlign = "center"
       row.push(th)
