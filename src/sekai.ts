@@ -23,7 +23,8 @@ enum gachaCardRarityRateGroupId {
   Normal = 1,
   ThreeStarPlus = 2,
   Festa = 3,
-  Birthday = 4
+  Birthday = 4,
+  WishFesta = 5
 }
 type PropsOfType<T, U> = keyof { [K in keyof T as T[K] extends U ? K : never]: T[K] }
 type PropsOfTypeNotAny<T, U> = Exclude<PropsOfType<T, U>, PropsOfType<T, null>>
@@ -89,7 +90,6 @@ function sekaiDbJsonFetch<T, const D extends readonly Promise<unknown>[] = reado
   return Promise.all([loaded, ...[...deps]] as const).then(callback)
 }
 
-
 const tableRows = new Set<HTMLTableRowElement & { sekaiEvent?: IEventInfo, pickupCards?: Set<ICardInfo>, sekaiGacha?: IGachaInfo }>
 
 function generateCardLink(card: ICardInfo, gameCharacters: IGameChara[], appendRarity: boolean = card.cardRarityType === "rarity_4" || card.cardRarityType === "rarity_birthday" ? false : true) {
@@ -126,6 +126,15 @@ const globalNow: EpochTimeStamp = Date.now()
 const eventsTable = document.createElement("table")
 
 
+function calcOffset<T extends { [key in K]: number }, K extends keyof T>(jps: T[], ens: T[], id: keyof T, offsetProperty: K) {
+  const future_ens = ens.filter(event_en => event_en[offsetProperty] > globalNow).sort((a, b) => b[offsetProperty] - a[offsetProperty]) //sorts descending
+  return (future_ens.reduce<number | null>((offset, en) => {
+    if (offset !== null) return offset
+    const nextEvent = jps.find(jp => jp[id] === en[id])
+    return nextEvent ? en[offsetProperty] - nextEvent[offsetProperty] : null
+  }, null) ?? 31556926000) /* unix year in ms */
+}
+
 const fetches = (() => {
   const gameCharacters: Promise<IGameChara[]> = sekaiDbJsonFetch("https://headsetruler.com/assets/json/gameCharacters.json")
   const gameCharacterUnits: Promise<IGameCharaUnit[]> = sekaiDbJsonFetch("https://headsetruler.com/assets/json/gameCharacterUnits.json")
@@ -134,9 +143,14 @@ const fetches = (() => {
   const cards: Promise<ICardInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/cards.json")
   const events_en: Promise<IEventInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-en-diff/main/events.json")
   const events: Promise<IEventInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/events.json", ([events, eventCards, eventDeckBonuses, cards, events_en, gameCharacterUnits, gameCharacters]) => {
-    const eventoffset = ((event) => event ? event.startAt - events[event.id].startAt : 31556926000 /* unix year in ms */)([...events_en].reverse().find(event_en => [...events].reverse().some(event => event.id === event_en.id)))
-    const now = globalNow - eventoffset
-    events.filter(event => event.closedAt > now).forEach(event => {
+    const offsetNow = globalNow - calcOffset(events, events_en, "id", "closedAt")
+    events.filter(event => {
+      const en_closedAt = events_en.find(event_en => event_en.id === event.id)?.closedAt
+      return en_closedAt ? en_closedAt > globalNow : event.closedAt > offsetNow
+    }).forEach(event => {
+      const en = events_en.find(event_en => event_en.id === event.id);
+      [event.closedAt, event.startAt] = en ? [en.closedAt, en.startAt] : [event.closedAt, event.startAt].map(timestamp => timestamp + (globalNow - offsetNow))
+
       const eventRow = Object.assign(document.createElement("tr"), { sekaiEvent: event })
       eventRow.id = "e" + event.id
 
@@ -217,13 +231,18 @@ const fetches = (() => {
     })
     return events
   }, [eventCards, eventDeckBonuses, cards, events_en, gameCharacterUnits, gameCharacters])
-  const gachas: Promise<IGachaInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", ([gachas, events, events_en, cards, gameCharacters]) => {
-    const eventoffset = ((event) => event ? event.startAt - events[event.id].startAt : 31556926000 /* unix year in ms */)([...events_en].reverse().find(event_en => [...events].reverse().some(event => event.id === event_en.id)))
-    const now = globalNow - eventoffset
+  const gachas_en: Promise<IGachaInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-en-diff/main/gachas.json")
+  const gachas: Promise<IGachaInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/gachas.json", ([gachas, gachas_en, events, events_en, cards, gameCharacters]) => {
+    const offsetNow = globalNow - calcOffset(gachas, gachas_en, "id", "startAt")
     const eventRows = [...tableRows].filter((tableRow): tableRow is HTMLTableRowElement & { sekaiEvent: IEventInfo, pickupCards: Set<ICardInfo> } => {
       return Object.getOwnPropertyNames(tableRow).includes("pickupCards")
     })
-    gachas.filter(gacha => gacha.endAt > now).forEach(gacha => {
+    gachas.filter(gacha => {
+      const en_endAt = gachas_en.find(gacha_en => gacha_en.id === gacha.id)?.endAt
+      return en_endAt ? en_endAt > globalNow : gacha.endAt > offsetNow
+    }).forEach(gacha => {
+      const en = gachas_en.find(gacha_en => gacha_en.id === gacha.id);
+      [gacha.endAt, gacha.startAt] = en ? [en.endAt, en.startAt] : [gacha.endAt, gacha.startAt].map(timestamp => timestamp + (globalNow - offsetNow))
       // skip paid gachas
       if (gacha.gachaBehaviors.every(behavior => behavior.costResourceType === "paid_jewel" || behavior.gachaSpinnableType === "colorful_pass")) return
 
@@ -231,7 +250,7 @@ const fetches = (() => {
       const isBirthday = gacha.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Birthday
 
       //flag festas
-      const festaParent = gacha.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Festa ? gachas.find(festaParent =>
+      const festaParent = gacha.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Festa || gacha.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.WishFesta ? gachas.find(festaParent =>
         festaParent.gachaCardRarityRateGroupId === gachaCardRarityRateGroupId.Normal &&
         festaParent.gachaCeilItemId === gacha.gachaCeilItemId) : undefined
 
@@ -262,7 +281,7 @@ const fetches = (() => {
         typeCell.innerText = "FESTA"
         typeCell.style.textAlign = "center"
         typeCell.style.fontWeight = "bold"
-        typeCell.style.fontSize = "1.2em"
+        typeCell.style.fontSize = "5em"
       }
       else if (!gachaRow.sekaiEvent) {
 
@@ -271,7 +290,8 @@ const fetches = (() => {
         typeCell.colSpan = 4
         typeCell.innerText = isBirthday ? "Birthday" : ""
         typeCell.innerText += gacha.name.includes("復刻") ? (isBirthday ? " " : "" + "Reprint") : ""
-        typeCell.style.textAlign = "center"
+        typeCell.style.textAlign = "right"
+        typeCell.style.fontWeight = "bold"
       }
 
       // cell 5: gacha
@@ -302,7 +322,7 @@ const fetches = (() => {
     }) as HTMLTableRowElement[])
 
     return gachas
-  }, [events, events_en, cards, gameCharacters])
+  }, [gachas_en, events, events_en, cards, gameCharacters])
 
   return [
     events,
