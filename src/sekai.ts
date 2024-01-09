@@ -145,6 +145,7 @@ const fetches = (() => {
   const events: Promise<IEventInfo[]> = sekaiDbJsonFetch("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/events.json", ([events, eventCards, eventDeckBonuses, cards, events_en, gameCharacterUnits, gameCharacters]) => {
     const offsetNow = globalNow - calcOffset(events, events_en, "id", "closedAt")
     events.filter(event => {
+      if (event.eventType === "world_bloom") return false
       const en_closedAt = events_en.find(event_en => event_en.id === event.id)?.closedAt
       return en_closedAt ? en_closedAt > globalNow : event.closedAt > offsetNow
     }).forEach(event => {
