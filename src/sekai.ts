@@ -168,7 +168,11 @@ const fetches = (() => {
 
       // cell 2: event type
       const eventTypeCell = eventRow.insertCell()
-      eventTypeCell.innerText = event.eventType === "cheerful_carnival" ? "C" : ""
+      switch (event.eventType) {
+        case "cheerful_carnival":
+          eventTypeCell.innerText = "C"
+          break;          
+      }
       eventTypeCell.style.textAlign = "center"
 
       // cell 3: event bonus characters/unit
