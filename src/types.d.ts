@@ -202,8 +202,8 @@ declare interface IEventInfo {
 declare interface IEventDeckBonus {
   id: number
   eventId: number
-  gameCharacterUnitId: gameCharacterUnitId
-  cardAttr: attr
+  gameCharacterUnitId?: gameCharacterUnitId
+  cardAttr?: attr
   bonusRate: number
 }
 

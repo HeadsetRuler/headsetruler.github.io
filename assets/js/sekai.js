@@ -164,9 +164,14 @@ const fetches = (() => {
             const eventBonusCellContent = new Set();
             let eventAttr;
             if (event.unit !== "none") { // single-unit event
-                eventAttr = (eventDeckBonuses.find((eventDeckBonus) => eventDeckBonus.eventId === event.id &&
-                    eventDeckBonus.cardAttr !== undefined).cardAttr);
-                eventBonusCellContent.add(attrAbbreviation[eventAttr] + '\xa0' /*&nbsp;*/ + unitAbbreviation[event.unit]);
+                if (event.eventType == "world_bloom") {
+                    eventBonusCellContent.add(unitAbbreviation[event.unit]);
+                }
+                else {
+                    eventAttr = (eventDeckBonuses.find((eventDeckBonus) => eventDeckBonus.eventId === event.id &&
+                        eventDeckBonus.cardAttr !== undefined).cardAttr);
+                    eventBonusCellContent.add(attrAbbreviation[eventAttr] + '\xa0' /*&nbsp;*/ + unitAbbreviation[event.unit]);
+                }
             }
             else { // mixed-unit event
                 eventDeckBonuses.filter((eventDeckBonus) => eventDeckBonus.eventId === event.id &&

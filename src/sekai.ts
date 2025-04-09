@@ -181,7 +181,10 @@ const fetches = (() => {
       const eventBonusCell = eventRow.insertCell()
       const eventBonusCellContent = new Set<string>()
       let eventAttr: attr
+
       if (event.unit !== "none") { // single-unit event
+        if (event.eventType == "world_bloom") { eventBonusCellContent.add(unitAbbreviation[event.unit]) }
+        else {
         eventAttr = (eventDeckBonuses.find((eventDeckBonus): eventDeckBonus is IEventDeckBonus & {
           cardAttr: attr
         } =>
@@ -189,6 +192,7 @@ const fetches = (() => {
           eventDeckBonus.cardAttr !== undefined
         )!.cardAttr)
         eventBonusCellContent.add(attrAbbreviation[eventAttr] + '\xa0'/*&nbsp;*/ + unitAbbreviation[event.unit])
+        }
       } else { // mixed-unit event
         eventDeckBonuses.filter((eventDeckBonus): eventDeckBonus is IEventDeckBonus & {
           cardAttr: attr, gameCharacterUnitId: gameCharacterUnitId
