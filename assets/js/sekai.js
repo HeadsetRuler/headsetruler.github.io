@@ -96,11 +96,11 @@ function generateCardLink(card, gameCharacters, appendRarity = card.cardRarityTy
         gameCharacter.givenName.toLowerCase() +
         (appendRarity ? card.cardRarityType.split("_")[1] : "");
     cardLink.classList.add("hoverpreview", "card");
-    const cardArtBase = "https://storage.sekai.best/sekai-assets/character/member/";
+    const cardArtBase = "https://storage.sekai.best/sekai-jp-assets/character/member/";
     const div = document.createElement("div");
     cardLink.addEventListener("pointerover", () => {
         const normal = document.createElement("img", { is: "co-img" });
-        normal.src = cardArtBase + card.assetbundleName + "_rip/card_normal.webp";
+        normal.src = cardArtBase + card.assetbundleName + "/card_normal.webp";
         div.appendChild(normal);
         if (card.specialTrainingCosts.length !== 0) {
             const trained = document.createElement("img", { is: "co-img" });
@@ -152,7 +152,14 @@ const fetches = (() => {
             eventIdCell.style.textAlign = "center";
             // cell 2: event type
             const eventTypeCell = eventRow.insertCell();
-            eventTypeCell.innerText = event.eventType === "cheerful_carnival" ? "C" : "";
+            switch (event.eventType) {
+                case "cheerful_carnival":
+                    eventTypeCell.innerText = "C";
+                    break;
+                case "world_bloom":
+                    eventTypeCell.innerText = "W";
+                    break;
+            }
             eventTypeCell.style.textAlign = "center";
             // cell 3: event bonus characters/unit
             const eventBonusCell = eventRow.insertCell();
@@ -298,29 +305,4 @@ Promise.all([DOMReady, fetches["1"]]).then(([_, data]) => {
     })());
     document.getElementById("event-table")?.replaceChildren(eventsTable);
 });
-/* card image hover preview
-{
-        e.classList.add("hoverpreview", "card")
-        const UrlCardId = e.href.split("/").pop()
-        if (!UrlCardId) { return }
-        const cardId = parseInt(UrlCardId)
-        const card = data.find((c) => c.id == cardId)
-        if (card) {
-          const div = document.createElement("div")
-          const normal = document.createElement("img", { is: "co-img" })
-          normal.src = cardArtBase + card.assetbundleName + "_rip/card_normal.webp"
-          const normalAppended = normal.decode().then(() => {
-            div.appendChild(normal)
-          }, () => normal.remove())
-          const trained = document.createElement("img", { is: "co-img" })
-          trained.src = cardArtBase + card.assetbundleName + "_rip/card_after_training.webp"
-          const trainedAppended = trained.decode().then(() => {
-            div.appendChild(trained)
-          }, () => trained.remove())
-          Promise.allSettled([normalAppended, trainedAppended]).then(() => {
-            e.appendChild(div)
-          })
-        }
-      }
-*/ 
 //# sourceMappingURL=sekai.js.map
