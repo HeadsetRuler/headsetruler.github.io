@@ -117,7 +117,7 @@ function generateCardLink(card: ICardInfo, gameCharacters: IGameChara[], appendR
     div.appendChild(normal)
     if (card.specialTrainingCosts.length !== 0) {
       const trained = document.createElement("img", { is: "co-img" })
-      trained.src = cardArtBase + card.assetbundleName + "_rip/card_after_training.webp"
+      trained.src = cardArtBase + card.assetbundleName + "/card_after_training.webp"
       div.appendChild(trained)
     }
     cardLink.appendChild(div)
