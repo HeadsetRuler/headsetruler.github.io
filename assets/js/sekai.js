@@ -22,6 +22,14 @@ var attrAbbreviation;
     attrAbbreviation["happy"] = "HA";
     attrAbbreviation["mysterious"] = "MY";
 })(attrAbbreviation || (attrAbbreviation = {}));
+var attrColors;
+(function (attrColors) {
+    attrColors["cute"] = "Pink";
+    attrColors["cool"] = "SkyBlue";
+    attrColors["pure"] = "MediumSpringGreen";
+    attrColors["happy"] = "Orange";
+    attrColors["mysterious"] = "MediumPurple";
+})(attrColors || (attrColors = {}));
 var gachaCardRarityRateGroupId;
 (function (gachaCardRarityRateGroupId) {
     gachaCardRarityRateGroupId[gachaCardRarityRateGroupId["Normal"] = 1] = "Normal";
@@ -162,7 +170,7 @@ const fetches = (() => {
             // cell 3: event bonus characters/unit
             const eventBonusCell = eventRow.insertCell();
             const eventBonusCellContent = new Set();
-            let eventAttr;
+            let eventAttr = undefined;
             if (event.unit !== "none") { // single-unit event
                 if (event.eventType == "world_bloom") {
                     eventBonusCellContent.add(unitAbbreviation[event.unit]);
@@ -185,6 +193,7 @@ const fetches = (() => {
             }
             eventBonusCell.innerText = [...eventBonusCellContent].join(' ');
             eventBonusCell.style.textAlign = "center";
+            eventBonusCell.style.backgroundColor = eventAttr !== undefined ? attrColors[eventAttr] : "";
             const pickupCards = new Set();
             const exchangeCards = new Set();
             eventCards.filter(eventCard => eventCard.eventId === event.id).map(eventCard => cards.find(card => card.id === eventCard.cardId)).forEach(card => {

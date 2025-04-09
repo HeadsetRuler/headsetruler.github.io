@@ -19,6 +19,13 @@ enum attrAbbreviation {
   happy = "HA",
   mysterious = "MY"
 }
+enum attrColors {
+  cute = "Pink",
+  cool = "SkyBlue",
+  pure = "MediumSpringGreen",
+  happy = "Orange",
+  mysterious = "MediumPurple"
+}
 enum gachaCardRarityRateGroupId {
   Normal = 1,
   ThreeStarPlus = 2,
@@ -180,7 +187,7 @@ const fetches = (() => {
       // cell 3: event bonus characters/unit
       const eventBonusCell = eventRow.insertCell()
       const eventBonusCellContent = new Set<string>()
-      let eventAttr: attr
+      let eventAttr: attr | undefined = undefined
 
       if (event.unit !== "none") { // single-unit event
         if (event.eventType == "world_bloom") { eventBonusCellContent.add(unitAbbreviation[event.unit]) }
@@ -208,6 +215,7 @@ const fetches = (() => {
       }
       eventBonusCell.innerText = [...eventBonusCellContent].join(' ')
       eventBonusCell.style.textAlign = "center"
+      eventBonusCell.style.backgroundColor = eventAttr !== undefined ? attrColors[eventAttr] : ""
 
       const pickupCards = new Set<ICardInfo>()
       const exchangeCards = new Set<ICardInfo>()
